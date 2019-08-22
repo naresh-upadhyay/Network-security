@@ -1,0 +1,2 @@
+The random number library provides classes that generate
+ random and pseudo-random numbers. These classes include:
