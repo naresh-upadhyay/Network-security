@@ -1,15 +1,12 @@
 #include <bits/stdc++.h>
 #define fl(i,n) for(int i = 0 ; i< n ; i++)
 using namespace std;
-string tostr(char ch){
-    string s(1,ch);
-    return s;
-}
+
 string generatekey(string text){
     int i=0;
     string key;
     while(text[i++]){
-        key.append(tostr('A' + clock()%26));
+        key.push_back('A' + clock()%26);
     }
     return key;
 }

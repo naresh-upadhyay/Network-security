@@ -68,7 +68,6 @@ void printing(string filename)
 }
 int main()
 {
-    fstream file;
     string fileinput, fileoutput, keyfile,key;
     int x;
     

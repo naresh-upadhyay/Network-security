@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 #define fl(i,n) for(int i = 0 ; i< n ; i++)
 using namespace std;
+int xornum(int n1,int n2){
+    int num=0;
+    fl(i,8){
+        int b1=n1%2,b2 = n2%2;
+        n1/=2;
+        n2/=2;
+        num+=(pow(2,i)*(b1^b2));
+    }
+    return num;
+}
 string tostr(char ch){
     string s(1,ch);
     return s;
@@ -34,7 +44,7 @@ void encyption(string sin, string sout,string keyfname)
     while(text[i]){
         int p = text[i] - 'A';
         int k = key[i] - 'A';
-        int c = (p ^ k );
+        int c = xornum(p,k);
         text[i] = 'A' + c;
         i++;
     }
@@ -62,7 +72,7 @@ void decryption(string sin, string sout, string keyfname)
     while(text[i]){
         int c = text[i] - 'A';
         int k = key[i] - 'A';
-        int p = (c ^ k);
+        int p = xornum(c,k);
         text[i] = 'A' + p;
         i++;
     }
