@@ -12,7 +12,7 @@ int *keyarr(string key)
     int ii = 0;
     for (auto it = indexedkey.begin(); it != indexedkey.end(); it++)
         arr[ii++] = it->second;
-    return arr;
+    return arr; //first which line should i read
 }
 string ntransposecipher(char **matrix, string text, int *key, float ksz)
 {
@@ -46,7 +46,7 @@ string ntransposetext(char **matrix, string ciphertext, int *key, float ksz)
     {
         fl(row, ceil(tsz / ksz))
         {
-            matrix[row][key[col]] = ciphertext[col *ceil(tsz / ksz)  + row];
+            matrix[row][key[col]] = ciphertext[col * ceil(tsz / ksz) + row];
         }
     }
     //matrix  to text
@@ -146,12 +146,18 @@ int main()
     ksz = key.size();
     while (1)
     {
-        cout << "Enter the input filename and output filename :-";
-        cin >> fileinput >> fileoutput;
         if (x == 1)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
             encyption(fileinput, fileoutput, key1, ksz, ntime);
+        }
         else if (x == 0)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
             decryption(fileinput, fileoutput, key1, ksz, ntime);
+        }
         else
             break;
         cout << "Enter number for encryption and decryption 1/0:-";

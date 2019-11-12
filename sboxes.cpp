@@ -40,57 +40,6 @@ vct input()
     }
     return cofficent;
 }
-string vct2str(vct arr){
-    string st;
-    for(int i=0; i<arr.size(); i++){
-        st.push_back('0'+arr[i]);
-    }
-    return st;
-}
-vct str2vct(string str){
-    vct arr;
-    for(int i=0; str[i];i++){
-        arr.push_back(str[i]-'0');
-    }
-    return arr;
-}
-string inttohex(int num){
-    if(num <10){
-        return to_string(num);
-    }else if(num == 10){
-        return "a";
-    }else if(num == 11){
-        return "b";
-    }else if(num == 12){
-        return "c";
-    }else if(num == 13){
-        return "d";
-    }else if(num == 14){
-        return "e";
-    }else if(num == 15){
-        return "f";
-    }
-}
-string bin2hex(string bin){
-    int val1=0,val2 = 0;
-    //cout <<"["<<bin<<"]";
-    for(int i=0;i<4;i++){
-        val1 += (bin[i]-'0')*pow(2,(4-i-1));
-        val2 += (bin[4+i]-'0')*pow(2,(4-i-1));
-    }
-    return inttohex(val1)+inttohex(val2);
-}
-string inttostr(int num){
-    string st;
-    int i=0;
-    while(i<4){
-        st.push_back('0'+(num&1));
-        num>>=1;
-        i++;
-    }
-    reverse(st.begin(),st.end());
-    return st;
-}
 vct addition(vct coff1, vct coff2)
 {
     vct coff;
@@ -102,7 +51,7 @@ vct addition(vct coff1, vct coff2)
 }
 pquesrem division(vct dividend, vct divby)
 {
-    int i = 0, count = 0, sz = divby.size();
+    int ii = 0, count = 0, sz = divby.size();
     vct rem, ques;
     //trim divby remove zeros
     for (int i = 0; i < sz; i++)
@@ -116,13 +65,13 @@ pquesrem division(vct dividend, vct divby)
             break;
     }
     //Normal divide
-    while (i < (dividend.size() - (divby.size() - 1)))
+    while (ii < (dividend.size() - (divby.size() - 1)))
     {
-        if (dividend[i])
+        if (dividend[ii])
         {
             fl(k, divby.size())
             {
-                dividend[i + k] = (dividend[i + k] ^ divby[k]);
+                dividend[ii + k] = (dividend[ii + k] ^ divby[k]);
             }
             ques.push_back(1);
         }
@@ -130,7 +79,7 @@ pquesrem division(vct dividend, vct divby)
         {
             ques.push_back(0);
         }
-        i++;
+        ii++;
     }
     for (int nsz = ques.size(); nsz < 8; nsz++)
     {
@@ -193,10 +142,9 @@ bool checkzero(vct arr)
     }
     return 0;
 }
-vct q, r1, r2, r, t1(8, 0), t2(8, 0), t;
 vct multiinverse(vct ra)
 {
-    //cout<<"["<<bin2hex(vct2str(ra))<<"]";
+    vct q, r1, r2, r, t1(8, 0), t2(8, 0), t;
     vct rp(9, 0);
     rp[8 - 8] = 1;
     rp[8 - 4] = 1;
@@ -224,8 +172,58 @@ vct multiinverse(vct ra)
         else
             break;
     }
-    //cout<<bin2hex(vct2str(t))<<" ";
     return t;
+}
+string vct2str(vct arr){
+    string st;
+    for(int i=0; i<arr.size(); i++){
+        st.push_back('0'+arr[i]);
+    }
+    return st;
+}
+vct str2vct(string str){
+    vct arr;
+    for(int i=0; str[i];i++){
+        arr.push_back(str[i]-'0');
+    }
+    return arr;
+}
+string inttohex(int num){
+    if(num <10){
+        return to_string(num);
+    }else if(num == 10){
+        return "a";
+    }else if(num == 11){
+        return "b";
+    }else if(num == 12){
+        return "c";
+    }else if(num == 13){
+        return "d";
+    }else if(num == 14){
+        return "e";
+    }else if(num == 15){
+        return "f";
+    }
+}
+string bin2hex(string bin){
+    int val1=0,val2 = 0;
+    //cout <<"["<<bin<<"]";
+    for(int i=0;i<4;i++){
+        val1 += (bin[i]-'0')*pow(2,(4-i-1));
+        val2 += (bin[4+i]-'0')*pow(2,(4-i-1));
+    }
+    return inttohex(val1)+inttohex(val2);
+}
+string inttostr(int num){
+    string st;
+    int i=0;
+    while(i<4){
+        st.push_back('0'+(num&1));
+        num>>=1;
+        i++;
+    }
+    reverse(st.begin(),st.end());
+    return st;
 }
 void printboxes(vct2dstr boxes){
     fl(i,16){
@@ -260,17 +258,13 @@ vct2dstr specialsboxes(vct2dstr boxes){
     fl(i,16){
         fl(j,16){
             string byteval;
-            vct inbytes = str2vct(boxes[i][j]);
-            //cout<<"["<<bin2hex(boxes[i][j])<<"]";
-            if(checkzero(inbytes))
-            inbytes = multiinverse(inbytes);
-            boxes[i][j] = vct2str(inbytes);
-            //cout<<bin2hex(boxes[i][j])<<" ";
+            cout <<"["<<bin2hex(boxes[i][j])<<"]";
             fl(k,8){
                 byteval.push_back('0'+((boxes[i][j][k]-'0')^(boxes[i][j][(k+4)%8]-'0')^(boxes[i][j][(k+5)%8]-'0')^(boxes[i][j][(k+6)%8]-'0')^(boxes[i][j][(k+7)%8]-'0')^(c[k]-'0')));
             }
             boxes[i][j] = byteval;
-        }cout<<endl;
+            cout <<bin2hex(boxes[i][j])<<" ";
+        }cout <<endl;
     }
     return boxes;
 }
@@ -301,8 +295,7 @@ int main()
         }else if(t == 6){
             printboxes(invsboxesfunct(sboxesfunct()));
         }else if(t == 7){
-            printboxes(sboxesfunct());
-            printboxes(specialsboxes(sboxesfunct()));
+            specialsboxes(sboxesfunct());
         }
         cout << "Enter :-";
         cin >> t;

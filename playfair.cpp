@@ -35,7 +35,7 @@ string stringcon(string text)
 string ciphertext(char key[][index], string ptext)
 {
     ptext = stringcon(ptext);
-    int i1, j1, i2, j2;
+    int i1, j1, i2, j2;//(row,col)=>(i1,j1)
     pair<int, int> p;
     fl2(i, ptext.length())
     {
@@ -106,10 +106,10 @@ bool isMatch(string keystr,char ch){
     }
     return false;
 }
-string getstr(char ch){
+/*string getstr(char ch){
     string s(1,ch);
     return s;
-}
+}*/
 
 string processkey(string keyfile)
 {
@@ -121,7 +121,7 @@ string processkey(string keyfile)
     transform(word.begin(),word.end(),word.begin(),::toupper);
     fl(i,word.length()){//keywords
         if(!isMatch(newkey,word[i]))
-            newkey.append(getstr(word[i]));
+            newkey.push_back(word[i]);
     }
     word = newkey;
     fl(i,26){
@@ -132,7 +132,7 @@ string processkey(string keyfile)
         else if(i == ('J'-'A'))
             continue;
         if(!isMatch(word,'A'+i))
-            newkey.append(getstr('A'+i));
+            newkey.push_back('A'+i);
     }
     ofstream outkey(keyfile,ios::out);
     outkey << newkey;
@@ -146,9 +146,7 @@ int main()
     string sin, sout, ord, text, cipher,keyfile,key;
     cout << " Enter the key file name:-";
     cin >> keyfile;
-    ifstream inkey(keyfile,ios::in);
-    inkey >> key;
-    key = processkey(key);
+    key = processkey(keyfile);
     fl(i,5){
         fl(j,5){
             arr[i][j] = key[i*5 + j];
@@ -159,7 +157,7 @@ int main()
     {
         string word;
         text = "";
-        cout << "Encryption/Decryption ?";
+        cout << "Encryption/Decryption [e/d]?";
         cin >> ch;
         if (ch == 'E' || ch == 'e')
         {

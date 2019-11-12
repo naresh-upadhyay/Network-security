@@ -1,3 +1,4 @@
+//ceaser cipher
 #include <bits/stdc++.h>
 using namespace std;
 void encyption(string sin, string sout, int k)
@@ -6,13 +7,17 @@ void encyption(string sin, string sout, int k)
     int wordint;
     ifstream ifile1(sin, ios::in);
     ofstream ofile(sout, ios::out);
+    while (k < 0)
+    {
+        k += 26;
+    }
     k %= 26;
     if (ofile.is_open())
     {
         while (ifile1 >> word)
         {
             int i = -1;
-            while (word[++i])
+            while (isalpha(word[++i]))
             {
                 wordint = word[i];
                 wordint += k;
@@ -22,6 +27,11 @@ void encyption(string sin, string sout, int k)
                 {
                     int temp = wordint - 122;
                     wordint = 96 + temp;
+                }
+                else if (wordint < 97)
+                {
+                    int temp = 97 - wordint;
+                    wordint = 123 - temp;
                 }
                 word[i] = wordint;
 
@@ -40,22 +50,31 @@ void decryption(string sin, string sout, int k)
     int wordint;
     ifstream ifile1(sin, ios::in);
     ofstream ofile(sout, ios::out);
+    while (k < 0)
+    {
+        k += 26;
+    }
+
     k %= 26;
     if (ofile.is_open())
     {
         while (ifile1 >> word)
         {
             int i = -1;
-            while (word[++i])
+            while (isalpha(word[++i]))
             {
                 wordint = word[i];
                 wordint -= k;
-                word[i] = tolower(word[i]);
 
                 if (wordint < 65)
                 {
                     int temp = 65 - wordint;
-                    wordint = 90 - temp;
+                    wordint = 91 - temp;
+                }
+                else if (wordint > 90)
+                {
+                    int temp = wordint - 90;
+                    wordint = 64 + temp;
                 }
                 word[i] = wordint;
 
@@ -88,14 +107,22 @@ int main()
     cin >> x;
     while (1)
     {
-        cout << "Enter the input filename and output filename:-";
-        cin >> fileinput >> fileoutput;
-        cout << "Enter key:-";
-        cin >> k;
         if (x == 1)
+        {
+            cout << "Enter the input filename and output filename:-";
+            cin >> fileinput >> fileoutput;
+            cout << "Enter key:-";
+            cin >> k;
             encyption(fileinput, fileoutput, k);
+        }
         else if (x == 0)
+        {
+            cout << "Enter the input filename and output filename:-";
+            cin >> fileinput >> fileoutput;
+            cout << "Enter key:-";
+            cin >> k;
             decryption(fileinput, fileoutput, k);
+        }
         else
             break;
         cout << "Enter number for encryption and decryption 1/0:-";

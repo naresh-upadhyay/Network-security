@@ -134,7 +134,7 @@ int main()
     int n;   //n*n dimention of key matrix
     while (1)
     {
-        cout << "Encryption /Decryption ?";
+        cout << "Encryption /Decryption [e/d] ?";
         cin >> ch;
         cout << "Key size :-";
         cin >> n;

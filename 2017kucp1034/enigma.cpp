@@ -46,36 +46,6 @@ void rotorWind(int h, int w, dqmap dmap)
 
     wrefresh(win);
 }
-//Printing instructions on screen
-void instructionOnScreen()
-{
-    //attron(COLOR_PAIR(2));
-    wmove(stdscr, 3, 5);
-    addstr("EW");
-    wmove(stdscr, 3, 14);
-    addstr("R1");
-    wmove(stdscr, 3, 26);
-    addstr("R2");
-    wmove(stdscr, 3, 38);
-    addstr("R3");
-    wmove(stdscr, 3, 46);
-    addstr("RF");
-    wmove(stdscr, 10, 55);
-    addstr("EW :- Entry wheel");
-    wmove(stdscr, 11, 55);
-    addstr("R1 :- Fast speed rotating wheel");
-    wmove(stdscr, 12, 55);
-    addstr("R2 :- Medium speed rotating wheel");
-    wmove(stdscr, 13, 55);
-    addstr("R3 :- Slow speed rotating wheel");
-    wmove(stdscr, 14, 55);
-    addstr("RF :- Reflector wheel");
-    int maxlines, maxcols;
-    getmaxyx(stdscr, maxlines, maxcols); //geting size of screen
-    wmove(stdscr, maxlines, 0);          //move the cursure in GUI for curent location (from where to print)
-    //attroff(COLOR_PAIR(2));
-    refresh();
-}
 //installing rotors on main window or screen  GUI
 void installMachine(dqmap dqmR1, dqmap dqmR2, dqmap dqmR3)
 {
@@ -336,14 +306,10 @@ void encyption(string sin, string sout, EnigmaMachine emachine)
             int i = -1;
             while (word[++i])
             {
-                instructionOnScreen();
-                if (isalpha(word[i]))
-                {
-                    word[i] = tolower(word[i]);
-                    word[i] = emachine.machine(word[i], 1); //char with delay seconds
-                    word[i] = toupper(word[i]);
-                    ofile << word[i];
-                }
+                word[i] = tolower(word[i]);
+                word[i] = emachine.machine(word[i], 1); //char with delay seconds
+                word[i] = toupper(word[i]);
+                ofile << word[i];
             }
             ofile << " ";
         }
@@ -366,13 +332,10 @@ void decryption(string sin, string sout, EnigmaMachine emachine)
             int i = -1;
             while (word[++i])
             {
-                instructionOnScreen();
-                if (isalpha(word[i]))
-                {
-                    word[i] = tolower(word[i]);
-                    word[i] = emachine.machine(word[i], 1); //char with delay seconds
-                    ofile << word[i];
-                }
+                word[i] = tolower(word[i]);
+                word[i] = emachine.machine(word[i], 1); //char with delay
+                //word[i] = toupper(word[i]);
+                ofile << word[i];
             }
             ofile << " ";
         }
@@ -418,7 +381,6 @@ int main()
     addstr("|||Warning :- Don't use backspace|||");
     attroff(COLOR_PAIR(6));
     addstr("Enter number for encryption and decryption 1/0:-");
-    refresh();
     x = (getch() - '0');
     refresh();
     while (1)

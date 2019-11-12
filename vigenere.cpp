@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
-#define fl(i,n) for(int i = 0 ; i< n ; i++)
+#define fl(i, n) for (int i = 0; i < n; i++)
 using namespace std;
 void encyption(string sin, string sout, string key)
 {
-    string word,text;
+    string word, text;
     int wordint;
     ifstream ifile1(sin, ios::in);
     ofstream ofile(sout, ios::out);
@@ -11,16 +11,17 @@ void encyption(string sin, string sout, string key)
     {
         while (ifile1 >> word)
         {
-            transform(word.begin(),word.end(),word.begin(), ::toupper);
+            transform(word.begin(), word.end(), word.begin(), ::toupper);
             text.append(word);
         }
     }
-    int i=0;
-    while(text[i]){
+    int i = 0;
+    while (text[i])
+    {
         int index = i % key.length();
         int p = text[i] - 'A';
         int k = key[index] - 'A';
-        int c = (p + k ) % 26;
+        int c = (p + k) % 26;
         text[i] = 'A' + c;
         i++;
     }
@@ -30,7 +31,7 @@ void encyption(string sin, string sout, string key)
 }
 void decryption(string sin, string sout, string key)
 {
-    string word,text;
+    string word, text;
     int wordint;
     ifstream ifile1(sin, ios::in);
     ofstream ofile(sout, ios::out);
@@ -41,8 +42,9 @@ void decryption(string sin, string sout, string key)
             text.append(word);
         }
     }
-    int i=0;
-    while(text[i]){
+    int i = 0;
+    while (text[i])
+    {
         int index = i % key.length();
         int c = text[i] - 'A';
         int k = key[index] - 'A';
@@ -68,22 +70,28 @@ void printing(string filename)
 }
 int main()
 {
-    string fileinput, fileoutput, keyfile,key;
+    string fileinput, fileoutput, keyfile, key;
     int x;
-    
+
     cout << "Enter number for encryption , decryption and key 1/0 and filename:-";
     cin >> x >> keyfile;
-    ifstream keyf(keyfile , ios::in);
-    keyf>>key;
-    transform(key.begin(),key.end(),key.begin(),::toupper);
+    ifstream keyf(keyfile, ios::in);
+    keyf >> key;
+    transform(key.begin(), key.end(), key.begin(), ::toupper);
     while (1)
     {
-        cout << "Enter the input filename and output filename :-";
-        cin >> fileinput >> fileoutput;
         if (x == 1)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
             encyption(fileinput, fileoutput, key);
+        }
         else if (x == 0)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
             decryption(fileinput, fileoutput, key);
+        }
         else
             break;
         cout << "Enter number for encryption and decryption 1/0:-";

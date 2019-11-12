@@ -1,18 +1,20 @@
 #include <bits/stdc++.h>
-#define fl(i,n) for(int i = 0 ; i< n ; i++)
+#define fl(i, n) for (int i = 0; i < n; i++)
 using namespace std;
 
-string generatekey(string text){
-    int i=0;
+string generatekey(string text)
+{
+    int i = 0;
     string key;
-    while(text[i++]){
-        key.push_back('A' + clock()%26);
+    while (text[i++])
+    {
+        key.push_back('A' + clock() % 26);
     }
     return key;
 }
-void encyption(string sin, string sout,string keyfname)
+void encyption(string sin, string sout, string keyfname)
 {
-    string word,text,key;
+    string word, text, key;
     int wordint;
     ifstream ifile1(sin, ios::in);
     ofstream keyfile(keyfname, ios::out);
@@ -21,17 +23,18 @@ void encyption(string sin, string sout,string keyfname)
     {
         while (ifile1 >> word)
         {
-            transform(word.begin(),word.end(),word.begin(), ::toupper);
+            transform(word.begin(), word.end(), word.begin(), ::toupper);
             text.append(word);
         }
     }
     key = generatekey(text);
     keyfile << key;
-    int i=0;
-    while(text[i]){
+    int i = 0;
+    while (text[i])
+    {
         int p = text[i] - 'A';
         int k = key[i] - 'A';
-        int c = (p + k ) % 26;
+        int c = (p + k) % 26;
         text[i] = 'A' + c;
         i++;
     }
@@ -42,7 +45,7 @@ void encyption(string sin, string sout,string keyfname)
 }
 void decryption(string sin, string sout, string keyfname)
 {
-    string word,text,key;
+    string word, text, key;
     int wordint;
     ifstream ifile1(sin, ios::in);
     ifstream keyfile(keyfname, ios::in);
@@ -55,8 +58,9 @@ void decryption(string sin, string sout, string keyfname)
             text.append(word);
         }
     }
-    int i=0;
-    while(text[i]){
+    int i = 0;
+    while (text[i])
+    {
         int c = text[i] - 'A';
         int k = key[i] - 'A';
         int p = (c - k + 26) % 26;
@@ -72,18 +76,22 @@ void decryption(string sin, string sout, string keyfname)
 int main()
 {
     fstream file;
-    string fileinput, fileoutput, keyfile,key;
+    string fileinput, fileoutput, keyfile, key;
     int x;
     cout << "Enter number for encryption , decryption and key 1/0 and filename:-";
     cin >> x >> keyfile;
     while (1)
     {
-        cout << "Enter the input filename and output filename :-";
-        cin >> fileinput >> fileoutput;
-        if (x == 1){
-            encyption(fileinput, fileoutput,keyfile);
+        if (x == 1)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
+            encyption(fileinput, fileoutput, keyfile);
         }
-        else if (x == 0){
+        else if (x == 0)
+        {
+            cout << "Enter the input filename and output filename :-";
+            cin >> fileinput >> fileoutput;
             decryption(fileinput, fileoutput, keyfile);
         }
         else
